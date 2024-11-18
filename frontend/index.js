@@ -5,8 +5,10 @@ document.addEventListener('DOMContentLoaded', async () => {
         let filteredData = [...data]; // Keep original data separate
         const leaderboardBody = document.getElementById('leaderboard-body');
         const sectionFilter = document.getElementById('section-filter');
+        const caan=document.getElementsByClassName('can')
 
         // Populate section filter dropdown
+
         const populateSectionFilter = () => {
             const sections = [...new Set(data.map(student => student.section || 'N/A'))].sort();
             sectionFilter.innerHTML = '<option value="all">All Sections</option>';
@@ -17,8 +19,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                 sectionFilter.appendChild(option);
             });
         };
-
-        // Function to export data to CSV
         const exportToCSV = (data) => {
             const headers = ['Rank', 'Roll Number', 'Name', 'Section', 'Total Solved', 'Easy', 'Medium', 'Hard', 'LeetCode URL'];
             const csvRows = data.map((student, index) => {
@@ -34,6 +34,9 @@ document.addEventListener('DOMContentLoaded', async () => {
                     student.url
                 ].join(',');
             });
+
+        // Function to export data to CSV
+        
             
             const csvContent = [headers.join(','), ...csvRows].join('\n');
             const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
@@ -45,7 +48,34 @@ document.addEventListener('DOMContentLoaded', async () => {
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
-        };
+
+        };// pie chart
+        caan = new Chart("can", {
+            type: "bar",
+            data: {},
+            options: {}
+          });
+
+          caan= new Chart("can", {
+            type: "line",
+            data: {},
+            options: {}
+          });
+          
+          const xValues = ["Italy", "France", "Spain", "USA", "Argentina"];
+const yValues = [55, 49, 44, 24, 15];
+const barColors = ["red", "green","blue","orange","brown"];
+
+new Chart("myChart", {
+  type: "bar",
+  data: {
+    labels: xValues,
+    datasets: [{
+      backgroundColor: barColors,
+      data: yValues
+    }]
+  }
+});
 
         // Function to render the leaderboard
         const renderLeaderboard = (sortedData) => {
@@ -71,6 +101,9 @@ document.addEventListener('DOMContentLoaded', async () => {
             });
         };
 
+ 
+ 
+ 
         // Filter function
         const filterData = (section) => {
             filteredData = section === 'all' 
